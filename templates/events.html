@@ -1,0 +1,23 @@
+
+<div class="container">
+    {{#each eventsByYear}}
+    <h2>Upcoming Events {{year}}</h1>
+    <ul class="events">
+        {{#each items}}
+        <li>
+            <div class="date">
+                <a href="{{link}}">
+                    <span class="month">{{month}}</span>
+                    <span class="day">{{day}}</span>
+                </a>
+            </div>
+            <div class="summary">
+                <p>{{summary}}</p>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+    {{/each}}
+</div>
+    
+    

@@ -1,0 +1,24 @@
+{
+  "name": "simple-event-list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nathanpower",
+  "license": "MIT",
+  "dependencies": {
+    "bell": "^9.1.0",
+    "handlebars": "^4.0.11",
+    "hapi": "^17.3.0",
+    "moment": "^2.22.1",
+    "vision": "^5.3.2",
+    "wreck": "^14.0.2"
+  },
+  "devDependencies": {
+    "code": "^5.2.0",
+    "lab": "^15.4.1"
+  }
+}
