@@ -27,8 +27,10 @@ internals.start = async function () {
         throw new Error('One or more of CLIENT_ID, CLIENT_SECRET and COOKIE_PASSWORD are not defined');
     }
 
+    const isProduction = process.env.NODE_ENV === 'production';
+
     const server = Hapi.server({
-        port: 8000,
+        port: isProduction ? 443 : 8000,
         debug: {
             request: 'error'
         }
@@ -38,7 +40,7 @@ internals.start = async function () {
 
     server.state('session', {
         ttl: 24 * 60 * 60 * 1000,     // One day
-        isSecure: false,
+        isSecure: isProduction ? true : false,
         path: '/',
         encoding: 'iron',
         password: COOKIE_PASSWORD,
@@ -60,7 +62,7 @@ internals.start = async function () {
         clientId: `${CLIENT_ID}v3.apps.googleusercontent.com`,
         clientSecret: CLIENT_SECRET,
         scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar'],
-        isSecure: false     // Terrible idea but required if not using HTTPS especially if developing locally
+        isSecure: isProduction ? true : false
     });
 
     server.views({
