@@ -30,7 +30,7 @@ internals.start = async function () {
     const isProduction = process.env.NODE_ENV === 'production';
 
     const server = Hapi.server({
-        port: isProduction ? 443 : 8000,
+        port: process.env.PORT || 8000,
         debug: {
             request: 'error'
         }
