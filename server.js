@@ -70,8 +70,7 @@ internals.start = async function () {
         relativeTo: __dirname,
         path: './templates',
         layout: true,
-        layoutPath: './templates/layout',
-        helpersPath: './templates/helpers'
+        layoutPath: './templates/layout'
     });
 
     server.route({
