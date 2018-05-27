@@ -62,7 +62,8 @@ internals.start = async function () {
         clientId: `${CLIENT_ID}v3.apps.googleusercontent.com`,
         clientSecret: CLIENT_SECRET,
         scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar'],
-        isSecure: isProduction ? true : false
+        isSecure: isProduction ? true : false,
+        forceHttps: isProduction ? true : false
     });
 
     server.views({
