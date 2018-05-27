@@ -1,8 +1,8 @@
 {
   "name": "simple-event-list",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Display events from a private Google calendar. Authentication via OAuth. Filter by summary text. https://simple-event-list.herokuapp.com/",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
