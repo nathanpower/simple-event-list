@@ -227,16 +227,28 @@
 
       function getQueriesFromLocalStorage () {
         const queries = JSON.parse(localStorage.getItem('queries')) || [];
-        if(queries.length > 1) {
-          for(let i = 1; i < queries.length; ++i) {
-            addFilter();
-          }
-        }
 
-        queries.forEach((query, index) => {
-          document.getElementById(`input-${index}`).value = query;
-        });
+        // nothing in query string, but we have previous filter queries in localstorage
+        // let's just reload the events with those previous filters applied
+        if (location.search === '' && queries.length > 0) {
+
+          // we start off with one input field, need to add more if more entries in localstorage
+          if(queries.length > 1) {
+            for(let i = 1; i < queries.length; ++i) {
+              addFilter();
+            }
+          }
+
+          // replace input field values with localstorage entries
+          queries.forEach((query, index) => {
+            document.getElementById(`input-${index}`).value = query;
+          });
+
+          reloadWithFilters();
+        }
       }
+
+
 
       window.onkeyup = function(e) {
         const key = e.keyCode ? e.keyCode : e.which;
