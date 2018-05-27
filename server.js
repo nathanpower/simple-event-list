@@ -28,9 +28,9 @@ internals.start = async function () {
     }
 
     const isProduction = process.env.NODE_ENV === 'production';
-
+    const port = process.env.PORT || 8000;
     const server = Hapi.server({
-        port: process.env.PORT || 8000,
+        port,
         debug: {
             request: 'error'
         }
@@ -47,10 +47,9 @@ internals.start = async function () {
         isSameSite: 'Lax'
     });
 
-    // Register bell with the server
+    // Register bell and vision with the server
 
-    await server.register(Bell);
-    await server.register(Vision);
+    await server.register([Bell, Vision]);
 
     // Declare an authentication strategy using the bell scheme
     // with the name of the provider, cookie encryption password,
@@ -87,7 +86,7 @@ internals.start = async function () {
 
     server.route({
         method: ['GET'],    // Must handle both GET and POST
-        path: '/logout',             // The callback endpoint registered with the provider
+        path: '/logout',
         options: {
             handler: Auth.logout
         }
@@ -101,6 +100,7 @@ internals.start = async function () {
         }
     });
 
+    console.log(`Server listening on port ${port}...`);
     await server.start();
 };
 
