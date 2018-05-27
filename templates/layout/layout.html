@@ -231,6 +231,12 @@
         });
       }
 
+      window.onkeyup = function(e) {
+        const key = e.keyCode ? e.keyCode : e.which;
+        const enterKeyCode = 13;
+        if (key === enterKeyCode) reloadWithFilters();
+      }
+
       getQueriesFromLocalStorage();
 
       document.querySelector('.add-filter-btn').addEventListener('click', addFilter);
