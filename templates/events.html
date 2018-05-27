@@ -1,9 +1,14 @@
+<div class="profile">
+    <p>{{profile.email}}<a href="/logout">&nbsp(sign out)</a></p>
+    <img class="profile-picture" src="{{profile.raw.picture}}">
+</div>
+
 <div class="controls-container">
 
     <ul class="filter-input-list">
         <li class="filter-input" id="filter-0">
             <button class="btn remove-filter-btn" id="0" title="Remove filter">❌</button>
-            <input class="text-filter" placeholder="Filter term" />
+            <input class="text-filter" id="input-0" placeholder="Filter term" />
         </li>
     </ul>
 

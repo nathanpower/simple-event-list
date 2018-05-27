@@ -6,7 +6,7 @@ const Bell = require('bell');
 const Hapi = require('hapi');
 const Vision = require('vision');
 const Events = require('./lib/events');
-const Login = require('./lib/login');
+const Auth = require('./lib/auth');
 
 
 // Declare internals
@@ -81,7 +81,15 @@ internals.start = async function () {
         path: '/login',             // The callback endpoint registered with the provider
         options: {
             auth: 'google',
-            handler: Login.handler
+            handler: Auth.login
+        }
+    });
+
+    server.route({
+        method: ['GET'],    // Must handle both GET and POST
+        path: '/logout',             // The callback endpoint registered with the provider
+        options: {
+            handler: Auth.logout
         }
     });
 

@@ -136,6 +136,26 @@
       background: greenyellow;
     }
 
+    .profile {
+      display: flex;
+      position: fixed;
+      right: 0;
+      top: 0;
+      padding: 10px;
+    }
+
+    .profile p {
+      display: flex;
+      align-items: center;
+      padding-right: 15px;
+    }
+
+    .profile-picture {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+
   </style>
 </head>
 
@@ -162,18 +182,30 @@
         });
       }
 
+      function getListItemHtml (id) {
+        return `<li class="filter-input" id="filter-${id}">
+          <button class="btn remove-filter-btn" id="${id}" title="Remove filter">❌</button>
+          <input class="text-filter" id="input-${id}" placeholder="Filter term" />
+          </li>`;
+      }
+
       function addFilter () {
         const filterCount = document.querySelectorAll('.filter-input').length;
         const filterListEl = document.querySelector('.filter-input-list');
-        const html = `<li class="filter-input" id="filter-${filterCount}"><button class="btn remove-filter-btn" id="${filterCount}" title="Remove filter">❌</button><input class="text-filter" placeholder="Filter term" /></li>`
-        filterListEl.insertAdjacentHTML('beforeend', html);
+        filterListEl.insertAdjacentHTML('beforeend', getListItemHtml(filterCount));
         addRemoveEvents();
+      }
+
+      function getQueries () {
+        return [...document.querySelectorAll('.text-filter')]
+          .filter(el => el && el.value)
+          .map(el => el.value)
+          .filter(str => str !== '');
       }
 
       function reloadWithFilters() {
         const baseUrl = location.origin;
-        const queries = [...document.querySelectorAll('.text-filter')].map(el => el.value).filter(str => str !== '');
-        console.log(queries);
+        const queries = getQueries();
         let query = queries.length > 0 ? '?' : '';
 
         queries.forEach((q, i) => {
@@ -181,10 +213,25 @@
           query += `q=${q}`;
           if(!isLast) query += '&';
         });
-
+        
+        localStorage.setItem('queries', JSON.stringify(queries));
         location.href = `${baseUrl}${query}`;
       }
 
+      function getQueriesFromLocalStorage () {
+        const queries = JSON.parse(localStorage.getItem('queries')) || [];
+        if(queries.length > 1) {
+          for(let i = 1; i < queries.length; ++i) {
+            addFilter();
+          }
+        }
+
+        queries.forEach((query, index) => {
+          document.getElementById(`input-${index}`).value = query;
+        });
+      }
+
+      getQueriesFromLocalStorage();
 
       document.querySelector('.add-filter-btn').addEventListener('click', addFilter);
       document.querySelector('.fetch-events-btn').addEventListener('click', reloadWithFilters);
