@@ -8,7 +8,6 @@
   <title></title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <link rel="manifest" href="site.webmanifest">
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
@@ -95,6 +94,48 @@
       justify-content: center;
     }
 
+    .controls-container {
+      position: fixed;
+      left: 0;
+      top: 0;
+      padding: 70px;
+      width: 200px;
+    }
+
+    ul.filter-input-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li.filter-input {
+      width: 235px;
+      display: flex;
+      margin-bottom: 15px;
+    }
+
+    input.text-filter {
+      width: 200px;
+      height: 30px;
+      font-size: 18px;
+      padding-left: 5px;
+    }
+
+    .btn {
+      font-size: 18px;
+    }
+
+    .add-filter-btn,
+    .fetch-events-btn {
+      display: flex;
+      margin-bottom: 15px;
+      color: #ccc;
+    }
+
+    .fetch-events-btn {
+      background: greenyellow;
+    }
+
   </style>
 </head>
 
@@ -105,5 +146,50 @@
 
   {{{content}}}
 </body>
+
+<script>
+    (function() {
+       
+      function removeFilter (ev) {
+        const targetId = `filter-${ev.target.id}`;
+        const target = document.getElementById(targetId);
+        target.remove();
+      }
+
+      function addRemoveEvents () {
+        document.querySelectorAll('.remove-filter-btn').forEach(btn => {
+          btn.addEventListener('click', removeFilter);
+        });
+      }
+
+      function addFilter () {
+        const filterCount = document.querySelectorAll('.filter-input').length;
+        const filterListEl = document.querySelector('.filter-input-list');
+        const html = `<li class="filter-input" id="filter-${filterCount}"><button class="btn remove-filter-btn" id="${filterCount}" title="Remove filter">❌</button><input class="text-filter" placeholder="Filter term" /></li>`
+        filterListEl.insertAdjacentHTML('beforeend', html);
+        addRemoveEvents();
+      }
+
+      function reloadWithFilters() {
+        const baseUrl = location.origin;
+        const queries = [...document.querySelectorAll('.text-filter')].map(el => el.value).filter(str => str !== '');
+        console.log(queries);
+        let query = queries.length > 0 ? '?' : '';
+
+        queries.forEach((q, i) => {
+          const isLast = i + 1 === queries.length;
+          query += `q=${q}`;
+          if(!isLast) query += '&';
+        });
+
+        location.href = `${baseUrl}${query}`;
+      }
+
+
+      document.querySelector('.add-filter-btn').addEventListener('click', addFilter);
+      document.querySelector('.fetch-events-btn').addEventListener('click', reloadWithFilters);
+      addRemoveEvents();
+    })();
+</script>
 
 </html>

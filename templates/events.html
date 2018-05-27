@@ -1,4 +1,15 @@
+<div class="controls-container">
 
+    <ul class="filter-input-list">
+        <li class="filter-input" id="filter-0">
+            <button class="btn remove-filter-btn" id="0" title="Remove filter">❌</button>
+            <input class="text-filter" placeholder="Filter term" />
+        </li>
+    </ul>
+
+    <button class="btn add-filter-btn" title="Add new text filter">➕</button>
+    <button class="btn fetch-events-btn" title="Reload events">🔃</button>
+</div>
 <div class="container">
     {{#each eventsByYear}}
     <h2>Upcoming Events {{year}}</h1>
