@@ -43,6 +43,10 @@
       margin: 0 auto 60px;
     }
 
+    .login a {
+      font-size: 18px;
+    }
+
     ul.events {
       margin: 0;
       padding: 32px 32px 16px;
@@ -228,18 +232,18 @@
       function getQueriesFromLocalStorage () {
         const queries = JSON.parse(localStorage.getItem('queries')) || [];
 
-        // nothing in query string, but we have previous filter queries in localstorage
+        // Nothing in query string, but we have previous filter queries in localStorage,
         // let's just reload the events with those previous filters applied
         if (location.search === '' && queries.length > 0) {
 
-          // we start off with one input field, need to add more if more entries in localstorage
+          // We start off with one input field, need to add more if more entries in localStorage
           if(queries.length > 1) {
             for(let i = 1; i < queries.length; ++i) {
               addFilter();
             }
           }
 
-          // replace input field values with localstorage entries
+          // Replace input field values with localStorage entries
           queries.forEach((query, index) => {
             document.getElementById(`input-${index}`).value = query;
           });

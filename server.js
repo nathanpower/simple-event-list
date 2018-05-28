@@ -85,7 +85,7 @@ internals.start = async function () {
     });
 
     server.route({
-        method: ['GET'],    // Must handle both GET and POST
+        method: ['GET'],
         path: '/logout',
         options: {
             handler: Auth.logout
