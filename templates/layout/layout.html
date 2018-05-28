@@ -232,21 +232,21 @@
       function getQueriesFromLocalStorage () {
         const queries = JSON.parse(localStorage.getItem('queries')) || [];
 
+        // We start off with one input field, need to add more if more entries in localStorage
+        if(queries.length > 1) {
+          for(let i = 1; i < queries.length; ++i) {
+            addFilter();
+          }
+        }
+
+        // Replace input field values with localStorage entries
+        queries.forEach((query, index) => {
+          document.getElementById(`input-${index}`).value = query;
+        });
+
         // Nothing in query string, but we have previous filter queries in localStorage,
         // let's just reload the events with those previous filters applied
         if (location.search === '' && queries.length > 0) {
-
-          // We start off with one input field, need to add more if more entries in localStorage
-          if(queries.length > 1) {
-            for(let i = 1; i < queries.length; ++i) {
-              addFilter();
-            }
-          }
-
-          // Replace input field values with localStorage entries
-          queries.forEach((query, index) => {
-            document.getElementById(`input-${index}`).value = query;
-          });
 
           reloadWithFilters();
         }
